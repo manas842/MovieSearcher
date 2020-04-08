@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Your Search Results for <%=query.toUpperCase()%></title>
+	<link rel="stylesheet" type="text/css" href="/css/shadow_v0.0.1.css">
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+</head>
+
+<body style="">
+	<style type="text/css">
+		label {
+			display: block;
+			margin: 2vh 0;
+		}
+		.footer-social li {
+			list-style: none;
+			display: inline-block;
+			background: #fff;
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
+			text-align: center;
+			padding: 2% 9.5%;
+		}
+		.bottom-footer {
+			margin-top: 10%;
+			position: relative;
+			bottom: 5%;
+			width: 100%
+		}
+		.bottom-footer ul {
+			margin: 0;
+			padding: 0;
+		}
+		.card-container {
+			display: grid;
+			width: 90%;
+			grid-template-columns: 25% 25% 25% 25%;
+			margin: auto;
+		}
+		.card-container .card {
+			width: 90%;
+			margin-bottom: 10%
+		}
+		.card-container .card .img-container {
+			height: 35vh;
+		}
+		.img-container:before {
+			content: " ";
+			filter: blur(4px);
+			height: 35vh;
+			width: 100%;
+			position: absolute;
+			background-size: cover;
+			z-index: 2;
+		}
+		.card-container .card img {
+			height: 100%;
+			display: block;
+			margin: auto;
+			max-width: 100%;
+			z-index: 5;
+			position: relative;
+		}
+		.card-container .card h5 {
+			height: 11vh;
+			overflow: hidden;
+			word-break: break-all;
+			padding: 0 0.5vw;
+		}
+		.card-container .card h5 {
+			height: 5vh;
+			overflow: hidden;
+			word-break: break-all;
+			padding: 0 0.5vw;
+			text-align: center;
+		}
+	</style>
+	<div class="container-fluid py-2" style="background-image: linear-gradient(#0003,#0003), url(https://source.unsplash.com/random/1600×1600/?movies);background-size:cover;min-height: 100vh;">
+		<header class="my-3 px-5">
+			<h1 class="text-white text-center">Your Search Results for <%=query.toUpperCase()%></h1>
+			<h6 class="text-white text-center">Showing Page <%=currentPage%>/<%=maxPages%></h6>
+			<div class="px-5">
+				<%if(currentPage!=1){%>
+					<button class="btn btn-primary my-3 " onclick="window.location.href='/search/<%=query%>/<%=currentPage-1%>/?year=<%=year%>&other=<%=other%>'" style="vertical-align: initial;">Previous</button>
+				<%}%>
+				<%if(currentPage<maxPages){%>
+						<button style="vertical-align: initial;" onclick="window.location.href='/search/<%=query%>/<%=currentPage+1%>/?year=<%=year%>&other=<%=other%>'" class="btn btn-primary my-3 float-right">Next</button>
+				<%}%>
+			</div>
+		</header>
+		<div class="card-container">
+			<%for(var i in data[ "Search"]){%>
+				<div class="card mx-auto" style="overflow: hidden;">
+					<div class="img-container img-<%=i%>">
+						<%if(data[ "Search"][i][ "Poster"]=="N/A" ){%>
+							<style type="text/css">
+								.img-<%=i%>:before {
+									/*background: url(https://source.unsplash.com/random/1600×1600/?<%-data["Search"][i]["Title"].split(" ")[0]%>);*/
+									background: url(https://source.unsplash.com/random/1600×1600/?<%-query%>);
+								}
+							</style>
+							<img src="https://source.unsplash.com/random/1600×1600/?<%-data["Search"][i]["Title"].split(" ")[0]%>">
+							<%}else{%>
+								<style type="text/css">
+									.img-<%=i%>:before {
+										background: url(<%-data["Search"][i]["Poster"]%>);
+									}
+								</style>
+								<img src="<%-data["Search"][i]["Poster"]%>">
+								<%}%>
+					</div>
+					<h5><%=data["Search"][i]["Title"]%></h5>
+					<label style="display: grid;grid-template-columns: auto auto;padding: 0 0.5vw;"><span>Year - <%=data["Search"][i]["Year"]%></span><span style="text-align: right;">Type - <type style="text-transform: capitalize;"><%=data["Search"][i]["Type"]%></type></span>
+					</label>
+					<button class="btn btn-warning" style="width: 60%;margin: 2vh auto;font-size: 3vh;vertical-align: initial;font-weight: bold;" onclick="window.location.href='/details/<%=data["Search"][i]["imdbID"]%>/'">More Info</button>
+				</div>
+				<%}%>
+		</div>
+		<footer>
+			<div class="bottom-footer row">
+				<!-- social -->
+				<div class="col-md-1 offset-md-4">
+					<ul class="footer-social">
+						<li><a href="https://www.facebook.com/codeoffun/" class="facebook"><i class="fa fa-facebook"></i></a>
+						</li>
+						<li><a href="https://www.linkedin.com/company/code-of-fun/" class="linkedin"><i class="fa fa-linkedin"></i></a>
+						</li>
+					</ul>
+				</div>
+				<!-- /social -->
+				<!-- copyright -->
+				<div class="col-md-6 col-md-pull-4">
+					<div class="footer-copyright">	<span class="text-white">© Copyright 2019. All Rights Reserved. | <a href="https://codeoffun.com"><b>CODEOFFUN</b></a></span>
+					</div>
+				</div>
+				<!-- /copyright -->
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/fitty.min.js"></script>
+	<script type="text/javascript">
+		fitty("h5")
+	</script>
+</body>
+
+</html>
