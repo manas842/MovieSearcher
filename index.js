@@ -8,7 +8,7 @@ app.get("/details/:id/*",function(req,res){
 	request("http://www.omdbapi.com/?i="+req.params.id+"&plot=full&apikey=fd3b1caa",function(err,body){
 		if(err) throw err
 		var data=JSON.parse(body["body"]);
-		/*for (var i in data) { 
+		/*for (var i in data) {
 			console.log("<p><%=data['"+i+"']%></p>")
 		}*/
 		console.log(data)
